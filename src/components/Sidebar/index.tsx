@@ -48,7 +48,6 @@ function Sidebar(props: IProps){
 
         <div className="flex flex-col gap-8">
         {data?.course?.lessons?.map((lesson)=>(
-          <>
                 <Lesson 
                 key={lesson.id}
                 title={lesson.title}
@@ -56,35 +55,6 @@ function Sidebar(props: IProps){
                 availableAt={new Date(lesson.availableAt)}
                 type={lesson.lessonType}
                  />
-                 <Lesson 
-                key={lesson.id}
-                title={lesson.title}
-                slug={lesson.slug}
-                availableAt={new Date(lesson.availableAt)}
-                type={lesson.lessonType}
-                 />
-                 <Lesson 
-                key={lesson.id}
-                title={lesson.title}
-                slug={lesson.slug}
-                availableAt={new Date(lesson.availableAt)}
-                type={lesson.lessonType}
-                 />
-                 <Lesson 
-                key={lesson.id}
-                title={lesson.title}
-                slug={lesson.slug}
-                availableAt={new Date(lesson.availableAt)}
-                type={lesson.lessonType}
-                 />
-                 <Lesson 
-                key={lesson.id}
-                title={lesson.title}
-                slug={lesson.slug}
-                availableAt={new Date(lesson.availableAt)}
-                type={lesson.lessonType}
-                 />
-                 </>
             ))}
         </div>
     </aside>
