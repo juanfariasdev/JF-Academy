@@ -5,8 +5,8 @@ import { Lesson } from "../Lesson"
 import './Sidebar.css';
 
 const GET_LESSONS_QUERY = gql`
-query {
-  course(where: {id: "cl5mdo4919qn90blzacbfda3w"}) {
+query GetLessonByCourseSlug($slug: String) {
+  course(where: {slug: $slug}) {
     lessons(orderBy: availableAt_ASC) {
       id
       slug
@@ -29,17 +29,22 @@ interface IGetLessonsQueryResponse {
     course: {lessons: Lessons[]};
 }
 interface IProps {
-  stateMenu: boolean
+  stateMenu: boolean,
+  courseSlug?: string
 }
 function Sidebar(props: IProps){
-  const { stateMenu } = props;
+  const { courseSlug, stateMenu } = props;
   if(stateMenu){
     document.body.style.overflow = "hidden"
   }
   else{
     document.body.style.overflow = ""
   }
-    const { data } = useQuery<IGetLessonsQueryResponse>(GET_LESSONS_QUERY)
+    const { data } = useQuery<IGetLessonsQueryResponse>(GET_LESSONS_QUERY, {
+      variables: {
+        slug: props.courseSlug
+      }
+    })
     return (
     <aside className="xl:w-[348px] bg-gray-700 p-6 border-l border-gray-600 z-[99] transition-all lateralMenu" style={stateMenu? {right: 0, overflow: "hidden scroll"} : {}}>
         <span className="font-bold text-2xl pb-6 mb-6 border-b border-gray-500 block">
@@ -54,6 +59,7 @@ function Sidebar(props: IProps){
                 slug={lesson.slug}
                 availableAt={new Date(lesson.availableAt)}
                 type={lesson.lessonType}
+                courseSlug={courseSlug}
                  />
             ))}
         </div>

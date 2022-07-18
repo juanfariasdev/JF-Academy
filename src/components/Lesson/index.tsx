@@ -7,18 +7,19 @@ interface ILessonProps{
     title: string;
     slug: string;
     availableAt: Date;
+    courseSlug?: string;
     type: 'live' | 'class';
 }
 
 function Lesson(props: ILessonProps){
-    const { title, slug, availableAt, type } = props;
+    const { title, slug, availableAt, courseSlug, type } = props;
     const isLessonAvaliable = isPast(availableAt);
     const availableDateFormatted = format(availableAt, "EEEE' • 'd' de ' MMMM' • 'k'h'mm", {
         locale: ptBR
     })
 
     return(
-        <Link to={`/course/lesson/${slug}`} className="group">
+        <Link to={`/course/${courseSlug}/${slug}`} className="group">
             <span className="text-gray-300">
                 {availableDateFormatted}
             </span>

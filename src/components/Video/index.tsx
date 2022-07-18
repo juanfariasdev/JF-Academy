@@ -2,14 +2,78 @@ import { DefaultUi, Player, Youtube } from "@vime/react"
 import { CaretRight, DiscordLogo, FileArrowDown, Lightning } from "phosphor-react"
 
 import '@vime/core/themes/default.css'
+import { gql, useQuery } from "@apollo/client";
 
-function Video() {
+
+const GET_LESSON_QUERY = gql`
+query GetLessonBySlug($slug: String) {
+  lesson(where: {slug: $slug}) {
+    title
+    description
+    videoId
+    availableAt
+    course {
+      teachers {
+        id
+        avatarURL
+        name
+        bio      
+      }
+    }
+  }
+}
+`
+type Teachers = {
+    id: string;
+    avatarURL: string;
+    name: string;
+    bio: string;
+}
+
+type Lessons = {
+    title: string;
+    description: string;
+    videoId: string;
+    availableAt: string;
+    course: {teachers: Teachers[]}
+}
+interface IGetLessonsQueryResponse {
+    lesson: Lessons;
+}
+
+interface IProps{
+    lessonSlug?: string;
+}
+
+function Video(props: IProps) {
+    const { data } = useQuery<IGetLessonsQueryResponse>(GET_LESSON_QUERY, {
+        variables: {
+          slug: props.lessonSlug
+        }
+      })
+      if(!data) {
+        return (
+            <div className="flex-1">
+                <p>Carregando...</p>
+            </div>
+        )
+      }
+
+      const {title, description, videoId, availableAt, course} = data.lesson;
+      let avaliableDate = new Date(availableAt)
+      let newDate = new Date();
+      let verifyDate = avaliableDate.getTime() > newDate.getTime();
+
+      let newVideoID = verifyDate? videoId : "FgdBfT-NMF0";
+      let newTitle = verifyDate? title : "Volte na data correta..."
+    
+      console.log(avaliableDate);
     return (
     <div className="flex-1 p-4">
         <div className="bg-black flex justify-center">
             <div className="h-full w-full max-w-[1300px] max-h-[60vh] aspect-video">
                 <Player>
-                    <Youtube videoId="baKTBuREJnY"/>
+                    <Youtube videoId={newVideoID}/>
                     <DefaultUi />
                 </Player>
             </div>
@@ -20,24 +84,28 @@ function Video() {
             <div className="flex items-start gap-8 flex-col xl:flex-row xl:gap-16">
                 <div className="flex-1">
                     <h1 className="text-2xl font-bold">
-                        Aula 1 abertura
+                       {newTitle}
                     </h1>
                     <p className="mt-4 text-gray-200 leading-relaxed">
-                        desc
+                        {description}
                     </p>
+                    
+                    <p className="mt-6 text-xl font-bold">{course.teachers.length > 1? "Professores" : "Professor"}</p>
+                    <div className="flex gap-4 flex-col sm:flex-row">
+                        {course.teachers.map((teacher)=>(
+                            <div key={teacher.id} className="flex items-center gap-4 mt-6">
+                                <img 
+                                className="h-16 w-16 rounded-full border-2 border-blue-500"
+                                src={teacher.avatarURL? teacher.avatarURL: "https://github.com/juanfariasdev.png"}
+                                alt="" 
+                                />
 
-                    <div className="flex items-center gap-4 mt-6">
-                        <img 
-                        className="h-16 w-16 rounded-full border-2 border-blue-500"
-                        src="https://github.com/juanfariasdev.png" 
-                        alt="" 
-                        />
-
-                        <div className="leading-relaxed">
-                            <strong className="font-bold text-2xl block">Juan Pablo Farias</strong>
-                            <span className="text-gray-200 text-sm block">CTO</span>
-                        </div>
-
+                                <div className="leading-relaxed">
+                                    <strong className="font-bold text-2xl block">{teacher.name}</strong>
+                                    <span className="text-gray-200 text-sm block">{teacher.bio}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
