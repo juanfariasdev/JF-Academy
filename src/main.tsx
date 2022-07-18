@@ -5,6 +5,7 @@ import App from './App'
 import { client } from './lib/apollo';
 
 import './styles/global.css';
+import './styles/scrollbar.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

@@ -1,0 +1,37 @@
+html {
+  scrollbar-color: var(--green-300) var(--gray-700);
+}
+
+/* width */
+::-webkit-scrollbar {
+    background-color: var(--gray-700);
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track { 
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--green-300); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--green-300); 
+  }
+
+::selection {
+    color: white;
+    background-color: var(--green-600);
+}
+:root {
+    --white: #fff;
+    --gray-700: #121214;
+
+    --green-300: #00c086;
+    --green-600: #00875F;    
+}
