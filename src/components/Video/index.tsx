@@ -2,56 +2,19 @@ import { DefaultUi, Player, Youtube } from "@vime/react"
 import { CaretRight, DiscordLogo, FileArrowDown, Lightning } from "phosphor-react"
 
 import '@vime/core/themes/default.css'
-import { gql, useQuery } from "@apollo/client";
-
-
-const GET_LESSON_QUERY = gql`
-query GetLessonBySlug($slug: String) {
-  lesson(where: {slug: $slug}) {
-    title
-    description
-    videoId
-    availableAt
-    course {
-      teachers {
-        id
-        avatarURL
-        name
-        bio      
-      }
-    }
-  }
-}
-`
-type Teachers = {
-    id: string;
-    avatarURL: string;
-    name: string;
-    bio: string;
-}
-
-type Lessons = {
-    title: string;
-    description: string;
-    videoId: string;
-    availableAt: string;
-    course: {teachers: Teachers[]}
-}
-interface IGetLessonsQueryResponse {
-    lesson: Lessons;
-}
+import { useGetLessonBySlugQuery } from "../../graphql/generated";
 
 interface IProps{
     lessonSlug?: string;
 }
 
 function Video(props: IProps) {
-    const { data } = useQuery<IGetLessonsQueryResponse>(GET_LESSON_QUERY, {
+    const { data } = useGetLessonBySlugQuery({
         variables: {
           slug: props.lessonSlug
         }
       })
-      if(!data) {
+      if(!data || !data.lesson) {
         return (
             <div className="flex-1">
                 <p>Carregando...</p>
@@ -92,26 +55,28 @@ function Video(props: IProps) {
                     <p className="mt-4 text-gray-200 leading-relaxed">
                         {lessonFilter.description}
                     </p>
-                    
-                    <p className="mt-6 text-xl font-bold">{course.teachers.length > 1? "Professores" : "Professor"}</p>
-                    <div className="flex gap-4 flex-col sm:flex-row">
-                        {course.teachers.map((teacher)=>(
-                            <div key={teacher.id} className="flex items-center gap-4 mt-6">
-                                <img 
-                                className="h-16 w-16 rounded-full border-2 border-blue-500"
-                                src={teacher.avatarURL? teacher.avatarURL: "https://github.com/juanfariasdev.png"}
-                                alt="" 
-                                />
+                    {course?.teachers && (
+                    <>
+                        <p className="mt-6 text-xl font-bold">{course.teachers.length > 1? "Professores" : "Professor"}</p>
+                        <div className="flex gap-4 flex-col sm:flex-row">
+                            {course?.teachers.map((teacher)=>(
+                                <div key={teacher.id} className="flex items-center gap-4 mt-6">
+                                    <img 
+                                    className="h-16 w-16 rounded-full border-2 border-blue-500"
+                                    src={teacher.avatarURL? teacher.avatarURL: "https://github.com/juanfariasdev.png"}
+                                    alt="" 
+                                    />
 
-                                <div className="leading-relaxed">
-                                    <strong className="font-bold text-2xl block">{teacher.name}</strong>
-                                    <span className="text-gray-200 text-sm block">{teacher.bio}</span>
+                                    <div className="leading-relaxed">
+                                        <strong className="font-bold text-2xl block">{teacher.name}</strong>
+                                        <span className="text-gray-200 text-sm block">{teacher.bio}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    </>
+                    )}
                 </div>
-
                 <div className="flex flex-col sm:flex-row xl:flex-col gap-4 w-full xl:w-auto">
                     <a href="" className="w-full p-4 text-sm bg-green-500 items-center rounded font-bold uppercase gap-2 flex justify-center hover:bg-green-700 transition-colors">
                         <DiscordLogo size={24}/>

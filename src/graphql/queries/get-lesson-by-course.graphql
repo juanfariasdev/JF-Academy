@@ -1,0 +1,11 @@
+query GetLessonByCourseSlug($slug: String) {
+  course(where: {slug: $slug}) {
+    lessons(orderBy: availableAt_ASC) {
+      id
+      slug
+      title
+      availableAt
+      lessonType
+    }
+  }
+}

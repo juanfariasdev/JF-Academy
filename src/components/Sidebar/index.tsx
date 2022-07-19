@@ -1,33 +1,10 @@
 import { gql, useQuery } from "@apollo/client"
 import { useState } from "react";
+import { useGetLessonByCourseSlugLazyQuery, useGetLessonByCourseSlugQuery } from "../../graphql/generated";
 import { Lesson } from "../Lesson"
 
 import './Sidebar.css';
 
-const GET_LESSONS_QUERY = gql`
-query GetLessonByCourseSlug($slug: String) {
-  course(where: {slug: $slug}) {
-    lessons(orderBy: availableAt_ASC) {
-      id
-      slug
-      title
-      availableAt
-      lessonType
-    }
-  }
-}
-`
-type Lessons = {
-    id: string;
-    slug: string;
-    title: string;
-    availableAt: string;
-    lessonType: 'live' | 'class';
-}
-
-interface IGetLessonsQueryResponse {
-    course: {lessons: Lessons[]};
-}
 interface IProps {
   stateMenu: boolean,
   courseSlug?: string
@@ -40,7 +17,7 @@ function Sidebar(props: IProps){
   else{
     document.body.style.overflow = ""
   }
-    const { data } = useQuery<IGetLessonsQueryResponse>(GET_LESSONS_QUERY, {
+    const { data } = useGetLessonByCourseSlugQuery({
       variables: {
         slug: props.courseSlug
       }
