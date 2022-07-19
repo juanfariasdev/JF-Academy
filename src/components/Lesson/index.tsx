@@ -31,7 +31,7 @@ function Lesson(props: ILessonProps){
             <div className={`rounded border border-gray-500 p-4 mt-2 group-hover:border-green-500 transition-all ${isActiveLesson && 'bg-green-500'}`}>
                 <header className="flex items-center justify-between">
                     {isLessonAvaliable ? (
-                    <span className="text-sm text-blue-500 font-medium flex items-center gap-2">
+                    <span className={`text-sm text-blue-500 font-medium flex items-center gap-2 $ ${(isActiveLesson && 'text-white')}`}>
                         <CheckCircle size={20} />
                         Conteúdo liberado
                     </span>
@@ -42,12 +42,12 @@ function Lesson(props: ILessonProps){
                     </span>
                     )}
                     
-                    <span className="text-xs rounded py-[0.125rem] px-2 text-white border border-green-300 font-bold">
+                    <span className={`text-xs rounded py-[0.125rem] px-2 text-white border border-green-300 font-bold ${(isActiveLesson && 'border-white')}`}>
                         {type === 'live'? 'AO VIVO': 'AULA PRÁTICA'}
                     </span>
                 </header>
 
-                <strong className="text-gray-200 mt-5 block">
+                <strong className={` mt-5 block ${(isActiveLesson && 'text-white')} ${(!isActiveLesson && 'text-gray-200')}`}>
                     {title}
                 </strong>
             </div>
