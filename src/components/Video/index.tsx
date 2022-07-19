@@ -62,18 +62,20 @@ function Video(props: IProps) {
       const {title, description, videoId, availableAt, course} = data.lesson;
       let avaliableDate = new Date(availableAt)
       let newDate = new Date();
-      let verifyDate = avaliableDate.getTime() > newDate.getTime();
-
-      let newVideoID = verifyDate? videoId : "FgdBfT-NMF0";
-      let newTitle = verifyDate? title : "Volte na data correta..."
+      let verifyDate = avaliableDate.getTime() < newDate.getTime();
     
+      const lessonFilter = {
+        videoId: verifyDate? videoId : "FgdBfT-NMF0",
+        title: verifyDate? title : "Volte na data correta...",
+        description: description? description : ""
+      }
       console.log(avaliableDate);
     return (
     <div className="flex-1 p-4">
         <div className="bg-black flex justify-center">
             <div className="h-full w-full max-w-[1300px] max-h-[60vh] aspect-video">
                 <Player>
-                    <Youtube videoId={newVideoID}/>
+                    <Youtube videoId={lessonFilter.videoId}/>
                     <DefaultUi />
                 </Player>
             </div>
@@ -84,10 +86,10 @@ function Video(props: IProps) {
             <div className="flex items-start gap-8 flex-col xl:flex-row xl:gap-16">
                 <div className="flex-1">
                     <h1 className="text-2xl font-bold">
-                       {newTitle}
+                       {lessonFilter.title}
                     </h1>
                     <p className="mt-4 text-gray-200 leading-relaxed">
-                        {description}
+                        {lessonFilter.description}
                     </p>
                     
                     <p className="mt-6 text-xl font-bold">{course.teachers.length > 1? "Professores" : "Professor"}</p>
