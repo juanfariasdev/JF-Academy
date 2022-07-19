@@ -6,7 +6,7 @@ export function Router(){
     return(
         <Routes>
             <Route path="/" element={<Subscribe/>}/>
-            <Route path="/course/" element={<Course/>}/>
+            <Route path="/course" element={<Course/>}/>
             <Route path="/course/:courseSlug" element={<Course/>}/>
             <Route path="/course/:courseSlug/:lessonSlug" element={<Course/>}/>
         </Routes>
