@@ -35,10 +35,10 @@ function Video(props: IProps) {
       }
 
     return (
-    <div className="flex-1 p-4">
+    <div className="flex-1 p-4" key={lessonFilter.videoId}>
         <div className="bg-black flex justify-center">
             <div className="h-full w-full max-w-[1300px] max-h-[60vh] aspect-video">
-                <Player key={lessonFilter.videoId}>
+                <Player>
                     <Youtube cookies={true} videoId={lessonFilter.videoId} />
                     <DefaultUi />
                 </Player>                
