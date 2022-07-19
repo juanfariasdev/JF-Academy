@@ -1,5 +1,4 @@
-import { Hamburger, List, X } from "phosphor-react";
-import { useState } from "react";
+import { List, X } from "phosphor-react";
 import { Logo } from "../../assets/logo"
 
 interface IProps{
