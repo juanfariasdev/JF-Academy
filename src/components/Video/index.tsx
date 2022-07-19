@@ -60,6 +60,7 @@ function Video(props: IProps) {
       }
 
       const {title, description, videoId, availableAt, course} = data.lesson;
+
       let avaliableDate = new Date(availableAt)
       let newDate = new Date();
       let verifyDate = avaliableDate.getTime() < newDate.getTime();
@@ -69,15 +70,15 @@ function Video(props: IProps) {
         title: verifyDate? title : "Volte na data correta...",
         description: description? description : ""
       }
-      console.log(avaliableDate);
+
     return (
     <div className="flex-1 p-4">
         <div className="bg-black flex justify-center">
             <div className="h-full w-full max-w-[1300px] max-h-[60vh] aspect-video">
-                <Player>
-                    <Youtube videoId={lessonFilter.videoId}/>
+                <Player key={lessonFilter.videoId}>
+                    <Youtube cookies={true} videoId={lessonFilter.videoId} />
                     <DefaultUi />
-                </Player>
+                </Player>                
             </div>
         </div>
 
