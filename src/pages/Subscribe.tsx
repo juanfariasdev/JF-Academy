@@ -22,7 +22,7 @@ function Subscribe(){
                 phone,
                 email
             }
-        }).then(() => navigate('/course')).catch(()=> navigate('/course'))
+        }).then(() => navigate('/elementor-na-pratica/instalando-o-wordpress-localmente')).catch(()=> navigate('/elementor-na-pratica/instalando-o-wordpress-localmente'))
 
         
 
