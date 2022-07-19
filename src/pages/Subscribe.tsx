@@ -1,9 +1,10 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../assets/logo"
 import { useCreateSubscriberMutation } from "../graphql/generated";
 
+
+import Banner from '../assets/code-mokup.png';
 
 function Subscribe(){
     const navigate = useNavigate();
@@ -83,7 +84,7 @@ function Subscribe(){
                     </form>
                 </div>
             </div>
-            <img className="mt-10" src="/src/assets/code-mokup.png" alt=""/>
+            <img className="mt-10" src={Banner} alt=""/>
         </div>
     )
 }
