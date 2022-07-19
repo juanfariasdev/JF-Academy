@@ -11,7 +11,8 @@ function Course(){
     return (
         <div className="flex flex-col min-h-screen">
             <Header stateMenu={stateMenu} setStateMenu={setStateMenu}/>
-            <main className="flex flex-1 flex-col xl:flex-row [&>*]:pt-24 xl:[&>*]:pt-4">
+            <main className="flex flex-1 flex-col 
+            xl:flex-row [&>*]:pt-24 xl:[&>*]:pt-4">
                 {courseSlug || lessonSlug? 
                 <Video lessonSlug={lessonSlug}/> 
                 : 

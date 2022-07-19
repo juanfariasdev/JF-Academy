@@ -21,8 +21,12 @@ function Sidebar(props: IProps){
       }
     })
     return (
-    <aside className="xl:w-[348px] bg-gray-700 p-6 border-l border-gray-600 z-[99] transition-all lateralMenu" style={stateMenu? {right: 0, overflow: "hidden scroll"} : {}}>
-        <span className="font-bold text-2xl pb-6 mb-6 border-b border-gray-500 block">
+    <aside 
+    className="bg-gray-700 p-6 border-l border-gray-600 z-[99] transition-all lateralMenu
+    xl:w-[348px]" 
+    style={stateMenu? {right: 0, overflow: "hidden scroll"} : {}}
+    >
+        <span className="block text-2xl font-bold pb-6 mb-6 border-b border-gray-500">
             Cronograma das aulas
         </span>
 
