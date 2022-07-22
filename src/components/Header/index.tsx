@@ -2,8 +2,8 @@ import { List, X } from "phosphor-react";
 import { Logo } from "../../assets/logo"
 
 interface IProps{
-    stateMenu: boolean;
-    setStateMenu: (value:boolean)=> void;
+    stateMenu?: boolean;
+    setStateMenu?: (value:boolean)=> void;
 }
 
 function Header(props: IProps){
@@ -16,6 +16,7 @@ function Header(props: IProps){
     >
         <Logo />
 
+{!!setStateMenu &&
         <button
         onClick={()=>setStateMenu(!stateMenu)}
         className="flex flex-col-reverse items-center gap-0
@@ -23,6 +24,7 @@ function Header(props: IProps){
         >
             Aulas <span className="text-blue-500 transition-all">{!stateMenu? <List size={32}/> : <X  size={32}/>}</span>
         </button>
+}
     </header>
     )
 }

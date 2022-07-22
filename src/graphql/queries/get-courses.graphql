@@ -1,0 +1,11 @@
+query GetCourses {
+  courses {
+    title
+    slug
+    tumbnailUrl
+    teachers {
+      avatarURL
+      name
+    }
+  }
+}
